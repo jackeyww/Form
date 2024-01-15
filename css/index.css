@@ -1,0 +1,39 @@
+* {
+    padding: 0;
+    margin: 0;
+  }
+  body {
+    /* 750根据设计稿宽度设计 */
+    max-width: 750px;
+    /* 居中 */
+    margin: 0 auto;
+  }
+  p.bridge {
+	font-size: 16px;  
+	color: #0055ff;
+  }
+  
+  .top{
+	  height: 50px;
+	  text-align: center;
+	background-color:#3485aa;
+	font-size: 20px;
+	line-height: 50px;
+	color: #ffffff;
+	margin-bottom: 30px;
+  }
+  .discrp:nth-child(odd){
+	  height: 30px;
+	  line-height: 30px;
+	  font-size: 16px;
+	  text-align: center;
+	  /* color: #ffffff; */
+	  /* background-color: #9bb1ff; */
+  }
+  .discrp:nth-child(even){
+	   height: 30px;
+	   line-height: 30px;
+  	  font-size: 16px;
+  	  text-align: center;
+	  
+  }

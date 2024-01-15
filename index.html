@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='utf-8'>
+		<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+		<title>Page Title</title>
+		<meta name='viewport' content='width=device-width, initial-scale=1'>
+		<link rel='stylesheet' type='text/css' media='screen' href="css/index.css">
+		<link rel="stylesheet" type='text/css' href="layui/css/layui.css" />
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<link rel="stylesheet" href="js/swiper/swiper-bundle.min.css" />
+		<script src="js/phone.js"></script>
+		<script src="js/jquery.js"></script>
+		<script src="layui/layui.js"></script>
+		<script src="js/defaultData.js"></script>
+		<script src="js/swiper/swiper-bundle.min.js"></script>
+		<script src="js/xlsx.mini.js"></script>
+	</head>
+	<body>
+		<!-- <ul class="layui-nav" lay-filter="">
+     <li class="layui-nav-item"><a href="">解冻冰箱</a></li>
+     <li class="layui-nav-item "><a href="">冷藏冰箱</a></li>
+     <li class="layui-nav-item"><a href="">早餐冰箱</a></li>
+     <li class="layui-nav-item"><a href="">单门冰箱</a></li>
+   </ul> -->
+		<div class="top">初版盘存工具</div>
+		<form class="layui-form" action="">
+			<!-- <div class="module">
+				<p>解冻冰箱</p>
+				<div class="layui-form-item">
+					<label class="layui-form-label">梅菜扣肉</label>
+					<div class="layui-input-block">
+						<input type="number" name="9-梅菜扣肉" required lay-verify="required" placeholder="请输入数量"
+							autocomplete="off" class="layui-input">
+					</div>
+				</div>
+			</div> -->
+			<!-- <div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+					<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+				</div>
+			</div> -->
+		</form>
+		<div class="wrapper"></div>
+		
+		<!-- <button type="button" class="layui-btn layui-btn layui-btn-radius">一个标准的按钮</button> -->
+		<script>
+			var defaultData = defaultData;
+			// console.log("defaultData", defaultData);
+			for(var key in defaultData){
+				var moduleData = defaultData[key];
+				// console.log("key",key,moduleData)
+				moduleData.forEach(function(item){
+					// console.log("item",item);
+					$(".layui-form").append('<div class="layui-form-item"><label class="layui-form-label">'+item.name+'</label><div class="layui-input-block"><input type="number" name="'+item.key+"-"+item.name+'"  placeholder="请输入数量"autocomplete="off" class="layui-input"></div></div>');
+				})
+			}
+			$(".layui-form").append('<div class="layui-form-item"><div class="layui-input-block"><button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button><button type="reset" class="layui-btn layui-btn-primary">重置</button></div></div>')
+			//重组后的数据
+			layui.use('form', function() {
+				var form = layui.form;
+				//监听提交
+				form.on('submit(formDemo)', function(data) {
+					var formData = [];
+					//提交后的数据（json）
+					let res = data.field;
+					// console.log(res)
+					for (var key in res) {
+						// console.log(key + res[key])
+						var arr = key.split("-");
+						// console.log(arr)
+						var singalValue = {
+							key: arr[0],
+							name: arr[1],
+							value: res[key]
+						};
+						formData.push(singalValue);
+						// console.log("singalValue",singalValue)
+					}
+					//根据key值大小升序排列
+					formData.sort((a, b) => a.key - b.key);
+					// console.log("newData", formData);
+					showFormData(formData);
+					// layer.open({
+					//   type: 1,
+					//   content: formData //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+					// });
+					return false;
+				});
+			});
+
+
+			function showFormData(data){
+				$(".wrapper").empty();
+				data.forEach(function(item){
+					console.log("item",item);
+					var numb = item.value;
+					if(numb == ''){
+						numb = 0;
+					}
+					$(".wrapper").append('<p class = "discrp">'+ item.name +"---"+ numb+'</p>');
+				})
+			}
+			
+			
+			var inventoryTablelist = [];
+			//  $(".layui-btn").click(function(){
+			//   //例子2
+			//   layer.prompt({
+			//     formType: 3,
+			//     value: '',
+			//     title: '输入序列号和名称，例 “3-梅菜扣肉”',
+			//     area: ['200px', '100px'] //自定义文本域宽高
+			//   }, function(value, index, elem){
+			//    var newarr = value.split("-");
+			// console.log(newarr);
+			//     // alert(value); //得到value
+			//     layer.close(index);
+			//  inventoryTablelist.push(newarr);
+			//  console.log("inventoryTablelist",inventoryTablelist);
+			//  localStorage.setItem("inventoryTablelist", inventoryTablelist);
+			//   });
+
+			//  })
+			var list = localStorage.getItem("inventoryTablelist");
+			// console.log("缓存的数据",list)
+		</script>
+	</body>
+	<style>
+
+	</style>
+</html>
